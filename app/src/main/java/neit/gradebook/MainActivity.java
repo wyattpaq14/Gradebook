@@ -1,13 +1,14 @@
 package neit.gradebook;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -72,10 +73,13 @@ public class MainActivity extends AppCompatActivity {
         EditText txtFirstName = (EditText)findViewById(R.id.txtFirstName);
         EditText txtLastName = (EditText)findViewById(R.id.txtLastName);
         EditText txtGrade = (EditText)findViewById(R.id.txtGrade);
+        Context context = getApplicationContext();
+        Grade grade1 = new Grade("id", "first name", "last name", 5);
+        grade1.writeToFile("test", context);
+        grade1.readFromFile(context);
 
 
-
-        Toast toast = Toast.makeText(this.getApplicationContext(), "hello world", Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(this.getApplicationContext(), grade1.readFromFile(context), Toast.LENGTH_LONG);
         toast.show();
 
 
