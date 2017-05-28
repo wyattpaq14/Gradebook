@@ -1,0 +1,71 @@
+Index: app/src/main/java/neit/gradebook/Grade.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/neit/gradebook/Grade.java	(revision )
++++ app/src/main/java/neit/gradebook/Grade.java	(revision )
+@@ -0,0 +1,48 @@
++package neit.gradebook;
++
++/**
++ * Created by 001382793 on 5/28/2017.
++ */
++
++public class Grade {
++
++    public double studentGrade;
++    public String studentFirstName;
++    public String studentLastName;
++    public String studentID;
++
++
++    public Grade(String id, String firstName, String lastName, double grade) {
++        studentGrade = grade;
++        studentFirstName = firstName;
++        studentLastName = lastName;
++        studentID = id;
++
++    }
++
++
++
++    //https://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android
++
++
++    public void print() {
++
++
++        try{
++            File file = new File("C:/file.txt");
++            PrintWriter writer = new PrintWriter(file);
++            writer.println("Grade: " + studentGrade);
++            writer.println("First Name: " + studentFirstName);
++            writer.println("Last Name: " + studentLastName);
++            writer.println("Student ID: " + studentID);
++            writer.println(" ");
++            writer.close();
++        } catch (IOException e) {
++            System.out.println("Error" + e);
++        }
++
++
++    }
++
++
++}
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(revision )
++++ .idea/vcs.xml	(revision )
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
