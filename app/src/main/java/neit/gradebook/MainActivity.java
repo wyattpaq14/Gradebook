@@ -13,7 +13,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
+
+
+    public EditText txtStudID;
+    public EditText txtFirstName;
+    public EditText txtLastName;
+    public EditText txtGrade;
+    public EditText txtAssignment;
+    public Button btnSubmit;
+    public Button btnDelete;
+
 
 
 
@@ -34,10 +46,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        txtStudID = (EditText) findViewById(R.id.txtStudID);
+        txtFirstName = (EditText) findViewById(R.id.txtFirstName);
+        txtLastName = (EditText) findViewById(R.id.txtLastName);
+        txtGrade = (EditText) findViewById(R.id.txtGrade);
+        txtAssignment = (EditText) findViewById(R.id.txtAssignment);
 
 
-        Button btnSubmit = (Button)findViewById(R.id.btnSubmit);
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
 
+        btnDelete = (Button) findViewById(R.id.btnDeleteGrades);
+
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File dir = getFilesDir();
+                File file = new File(dir, "config.txt");
+                file.delete();
+
+                Toast toast = Toast.makeText(getApplicationContext(), "Grades Deleted!", Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 processNewGrade();
             }
         });
+
+
     }
 
     @Override
@@ -68,18 +101,16 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
     public void processNewGrade() {
-        EditText txtStudID = (EditText)findViewById(R.id.txtStudID);
-        EditText txtFirstName = (EditText)findViewById(R.id.txtFirstName);
-        EditText txtLastName = (EditText)findViewById(R.id.txtLastName);
-        EditText txtGrade = (EditText)findViewById(R.id.txtGrade);
+
         Context context = getApplicationContext();
-        Grade grade1 = new Grade("id", "first name", "last name", 5);
-        grade1.writeToFile("test", context);
-        grade1.readFromFile(context);
+        Grade grade1 = new Grade(txtStudID.getText().toString(), txtFirstName.getText().toString(), txtLastName.getText().toString(), Double.parseDouble(txtGrade.getText().toString()), txtAssignment.getText().toString());
+        grade1.writeToFile(context);
 
 
-        Toast toast = Toast.makeText(this.getApplicationContext(), grade1.readFromFile(context), Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(this.getApplicationContext(), Grade.readFromFile(context)[0], Toast.LENGTH_LONG);
         toast.show();
 
 

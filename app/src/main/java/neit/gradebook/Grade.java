@@ -21,34 +21,24 @@ public class Grade {
     public double studentGrade;
     public String studentFirstName;
     public String studentLastName;
+    public String assignemnt;
     public String studentID;
 
 
-    public Grade(String id, String firstName, String lastName, double grade) {
+    public Grade(String id, String firstName, String lastName, double grade, String assign) {
         studentGrade = grade;
         studentFirstName = firstName;
         studentLastName = lastName;
         studentID = id;
+        assignemnt = assign;
 
     }
 
 
     //https://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android
 
-    public void writeToFile(String data, Context context) {
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_APPEND));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
-            Log.i("NOTICE", "File Wrote");
-        } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-
-
-    public String readFromFile(Context context) {
-
+    public static String[] readFromFile(Context context) {
+        String[] fileString = new String[900];
         String ret = "";
 
         try {
@@ -59,11 +49,12 @@ public class Grade {
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 String receiveString = "";
                 StringBuilder stringBuilder = new StringBuilder();
-
+                int iterationCcount = 0;
                 while ((receiveString = bufferedReader.readLine()) != null) {
                     stringBuilder.append(receiveString);
+                    fileString[iterationCcount] = receiveString;
+                    iterationCcount++;
                 }
-
                 inputStream.close();
                 ret = stringBuilder.toString();
             }
@@ -73,12 +64,22 @@ public class Grade {
             Log.e("login activity", "Can not read file: " + e.toString());
         }
 
-        return ret;
+        return fileString;
     }
 
+    public void writeToFile(Context context) {
+        try {
+            String data = studentID + " " + studentFirstName + " " + studentLastName + " " + studentGrade + " " + assignemnt + "\n";
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_APPEND));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
 
+            Log.i("NOTICE", "File Wrote");
 
-
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
 
     public void print() {
 
